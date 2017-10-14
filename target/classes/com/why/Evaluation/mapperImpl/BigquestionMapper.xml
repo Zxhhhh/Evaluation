@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.why.Evaluation.mapperImpl.BigquestionMapper" >
+  <resultMap id="BaseResultMap" type="com.why.Evaluation.dto.Bigquestion" >
+    <id column="bigquestion_id" property="bigquestionId" jdbcType="INTEGER" />
+    <result column="paper_id" property="paperId" jdbcType="INTEGER" />
+    <result column="bigquestion_n" property="bigquestionN" jdbcType="INTEGER" />
+    <result column="question_ids" property="questionIds" jdbcType="VARCHAR" />
+    <result column="bigquestion_score" property="bigquestionScore" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    bigquestion_id, paper_id, bigquestion_n, question_ids, bigquestion_score
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.why.Evaluation.dto.BigquestionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bigquestion
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bigquestion
+    where bigquestion_id = #{bigquestionId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bigquestion
+    where bigquestion_id = #{bigquestionId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.why.Evaluation.dto.BigquestionExample" >
+    delete from bigquestion
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.why.Evaluation.dto.Bigquestion" >
+    insert into bigquestion (bigquestion_id, paper_id, bigquestion_n, 
+      question_ids, bigquestion_score)
+    values (#{bigquestionId,jdbcType=INTEGER}, #{paperId,jdbcType=INTEGER}, #{bigquestionN,jdbcType=INTEGER}, 
+      #{questionIds,jdbcType=VARCHAR}, #{bigquestionScore,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.why.Evaluation.dto.Bigquestion" >
+    insert into bigquestion
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bigquestionId != null" >
+        bigquestion_id,
+      </if>
+      <if test="paperId != null" >
+        paper_id,
+      </if>
+      <if test="bigquestionN != null" >
+        bigquestion_n,
+      </if>
+      <if test="questionIds != null" >
+        question_ids,
+      </if>
+      <if test="bigquestionScore != null" >
+        bigquestion_score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bigquestionId != null" >
+        #{bigquestionId,jdbcType=INTEGER},
+      </if>
+      <if test="paperId != null" >
+        #{paperId,jdbcType=INTEGER},
+      </if>
+      <if test="bigquestionN != null" >
+        #{bigquestionN,jdbcType=INTEGER},
+      </if>
+      <if test="questionIds != null" >
+        #{questionIds,jdbcType=VARCHAR},
+      </if>
+      <if test="bigquestionScore != null" >
+        #{bigquestionScore,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.why.Evaluation.dto.BigquestionExample" resultType="java.lang.Integer" >
+    select count(*) from bigquestion
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bigquestion
+    <set >
+      <if test="record.bigquestionId != null" >
+        bigquestion_id = #{record.bigquestionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.paperId != null" >
+        paper_id = #{record.paperId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bigquestionN != null" >
+        bigquestion_n = #{record.bigquestionN,jdbcType=INTEGER},
+      </if>
+      <if test="record.questionIds != null" >
+        question_ids = #{record.questionIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bigquestionScore != null" >
+        bigquestion_score = #{record.bigquestionScore,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bigquestion
+    set bigquestion_id = #{record.bigquestionId,jdbcType=INTEGER},
+      paper_id = #{record.paperId,jdbcType=INTEGER},
+      bigquestion_n = #{record.bigquestionN,jdbcType=INTEGER},
+      question_ids = #{record.questionIds,jdbcType=VARCHAR},
+      bigquestion_score = #{record.bigquestionScore,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.why.Evaluation.dto.Bigquestion" >
+    update bigquestion
+    <set >
+      <if test="paperId != null" >
+        paper_id = #{paperId,jdbcType=INTEGER},
+      </if>
+      <if test="bigquestionN != null" >
+        bigquestion_n = #{bigquestionN,jdbcType=INTEGER},
+      </if>
+      <if test="questionIds != null" >
+        question_ids = #{questionIds,jdbcType=VARCHAR},
+      </if>
+      <if test="bigquestionScore != null" >
+        bigquestion_score = #{bigquestionScore,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where bigquestion_id = #{bigquestionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.why.Evaluation.dto.Bigquestion" >
+    update bigquestion
+    set paper_id = #{paperId,jdbcType=INTEGER},
+      bigquestion_n = #{bigquestionN,jdbcType=INTEGER},
+      question_ids = #{questionIds,jdbcType=VARCHAR},
+      bigquestion_score = #{bigquestionScore,jdbcType=DOUBLE}
+    where bigquestion_id = #{bigquestionId,jdbcType=INTEGER}
+  </update>
+  
+  
+  <select id="selectMaxBigquestionN" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
+    select max(bigquestion_n) from bigquestion where paper_id=#{paper_id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectSumScore" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+  	select sum(bigquestion_score) from bigquestion where paper_id=#{paper_id,jdbcType=INTEGER}
+  </select>
+  
+</mapper>

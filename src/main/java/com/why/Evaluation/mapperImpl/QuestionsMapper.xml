@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.why.Evaluation.mapperImpl.QuestionsMapper" >
+  <resultMap id="BaseResultMap" type="com.why.Evaluation.dto.Questions" >
+    <id column="question_id" property="questionId" jdbcType="INTEGER" />
+    <result column="question_type" property="questionType" jdbcType="VARCHAR" />
+    <result column="category" property="category" jdbcType="INTEGER" />
+    <result column="question_title" property="questionTitle" jdbcType="VARCHAR" />
+    <result column="question_socre" property="questionSocre" jdbcType="DOUBLE" />
+    <result column="option_a" property="optionA" jdbcType="VARCHAR" />
+    <result column="option_b" property="optionB" jdbcType="VARCHAR" />
+    <result column="option_c" property="optionC" jdbcType="VARCHAR" />
+    <result column="option_d" property="optionD" jdbcType="VARCHAR" />
+    <result column="answer_true" property="answerTrue" jdbcType="VARCHAR" />
+    <result column="question_analysis" property="questionAnalysis" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="catalog_id" property="catalogId" jdbcType="INTEGER" />
+    <result column="question_level" property="questionLevel" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    question_id, question_type, category, question_title, question_socre, option_a, option_b, 
+    option_c, option_d, answer_true, question_analysis, create_time, catalog_id, question_level
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.why.Evaluation.dto.QuestionsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from questions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from questions
+    where question_id = #{questionId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from questions
+    where question_id = #{questionId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.why.Evaluation.dto.QuestionsExample" >
+    delete from questions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.why.Evaluation.dto.Questions" >
+    insert into questions (question_id, question_type, category, 
+      question_title, question_socre, option_a, 
+      option_b, option_c, option_d, 
+      answer_true, question_analysis, create_time, 
+      catalog_id, question_level)
+    values (#{questionId,jdbcType=INTEGER}, #{questionType,jdbcType=VARCHAR}, #{category,jdbcType=INTEGER}, 
+      #{questionTitle,jdbcType=VARCHAR}, #{questionSocre,jdbcType=DOUBLE}, #{optionA,jdbcType=VARCHAR}, 
+      #{optionB,jdbcType=VARCHAR}, #{optionC,jdbcType=VARCHAR}, #{optionD,jdbcType=VARCHAR}, 
+      #{answerTrue,jdbcType=VARCHAR}, #{questionAnalysis,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{catalogId,jdbcType=INTEGER}, #{questionLevel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.why.Evaluation.dto.Questions" >
+    insert into questions
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="questionId != null" >
+        question_id,
+      </if>
+      <if test="questionType != null" >
+        question_type,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
+      <if test="questionTitle != null" >
+        question_title,
+      </if>
+      <if test="questionSocre != null" >
+        question_socre,
+      </if>
+      <if test="optionA != null" >
+        option_a,
+      </if>
+      <if test="optionB != null" >
+        option_b,
+      </if>
+      <if test="optionC != null" >
+        option_c,
+      </if>
+      <if test="optionD != null" >
+        option_d,
+      </if>
+      <if test="answerTrue != null" >
+        answer_true,
+      </if>
+      <if test="questionAnalysis != null" >
+        question_analysis,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="catalogId != null" >
+        catalog_id,
+      </if>
+      <if test="questionLevel != null" >
+        question_level,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="questionId != null" >
+        #{questionId,jdbcType=INTEGER},
+      </if>
+      <if test="questionType != null" >
+        #{questionType,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="questionTitle != null" >
+        #{questionTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="questionSocre != null" >
+        #{questionSocre,jdbcType=DOUBLE},
+      </if>
+      <if test="optionA != null" >
+        #{optionA,jdbcType=VARCHAR},
+      </if>
+      <if test="optionB != null" >
+        #{optionB,jdbcType=VARCHAR},
+      </if>
+      <if test="optionC != null" >
+        #{optionC,jdbcType=VARCHAR},
+      </if>
+      <if test="optionD != null" >
+        #{optionD,jdbcType=VARCHAR},
+      </if>
+      <if test="answerTrue != null" >
+        #{answerTrue,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnalysis != null" >
+        #{questionAnalysis,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="catalogId != null" >
+        #{catalogId,jdbcType=INTEGER},
+      </if>
+      <if test="questionLevel != null" >
+        #{questionLevel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.why.Evaluation.dto.QuestionsExample" resultType="java.lang.Integer" >
+    select count(*) from questions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update questions
+    <set >
+      <if test="record.questionId != null" >
+        question_id = #{record.questionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.questionType != null" >
+        question_type = #{record.questionType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.category != null" >
+        category = #{record.category,jdbcType=INTEGER},
+      </if>
+      <if test="record.questionTitle != null" >
+        question_title = #{record.questionTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionSocre != null" >
+        question_socre = #{record.questionSocre,jdbcType=DOUBLE},
+      </if>
+      <if test="record.optionA != null" >
+        option_a = #{record.optionA,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optionB != null" >
+        option_b = #{record.optionB,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optionC != null" >
+        option_c = #{record.optionC,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optionD != null" >
+        option_d = #{record.optionD,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerTrue != null" >
+        answer_true = #{record.answerTrue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionAnalysis != null" >
+        question_analysis = #{record.questionAnalysis,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.catalogId != null" >
+        catalog_id = #{record.catalogId,jdbcType=INTEGER},
+      </if>
+      <if test="record.questionLevel != null" >
+        question_level = #{record.questionLevel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update questions
+    set question_id = #{record.questionId,jdbcType=INTEGER},
+      question_type = #{record.questionType,jdbcType=VARCHAR},
+      category = #{record.category,jdbcType=INTEGER},
+      question_title = #{record.questionTitle,jdbcType=VARCHAR},
+      question_socre = #{record.questionSocre,jdbcType=DOUBLE},
+      option_a = #{record.optionA,jdbcType=VARCHAR},
+      option_b = #{record.optionB,jdbcType=VARCHAR},
+      option_c = #{record.optionC,jdbcType=VARCHAR},
+      option_d = #{record.optionD,jdbcType=VARCHAR},
+      answer_true = #{record.answerTrue,jdbcType=VARCHAR},
+      question_analysis = #{record.questionAnalysis,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=VARCHAR},
+      catalog_id = #{record.catalogId,jdbcType=INTEGER},
+      question_level = #{record.questionLevel,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.why.Evaluation.dto.Questions" >
+    update questions
+    <set >
+      <if test="questionType != null" >
+        question_type = #{questionType,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="questionTitle != null" >
+        question_title = #{questionTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="questionSocre != null" >
+        question_socre = #{questionSocre,jdbcType=DOUBLE},
+      </if>
+      <if test="optionA != null" >
+        option_a = #{optionA,jdbcType=VARCHAR},
+      </if>
+      <if test="optionB != null" >
+        option_b = #{optionB,jdbcType=VARCHAR},
+      </if>
+      <if test="optionC != null" >
+        option_c = #{optionC,jdbcType=VARCHAR},
+      </if>
+      <if test="optionD != null" >
+        option_d = #{optionD,jdbcType=VARCHAR},
+      </if>
+      <if test="answerTrue != null" >
+        answer_true = #{answerTrue,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnalysis != null" >
+        question_analysis = #{questionAnalysis,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="catalogId != null" >
+        catalog_id = #{catalogId,jdbcType=INTEGER},
+      </if>
+      <if test="questionLevel != null" >
+        question_level = #{questionLevel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where question_id = #{questionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.why.Evaluation.dto.Questions" >
+    update questions
+    set question_type = #{questionType,jdbcType=VARCHAR},
+      category = #{category,jdbcType=INTEGER},
+      question_title = #{questionTitle,jdbcType=VARCHAR},
+      question_socre = #{questionSocre,jdbcType=DOUBLE},
+      option_a = #{optionA,jdbcType=VARCHAR},
+      option_b = #{optionB,jdbcType=VARCHAR},
+      option_c = #{optionC,jdbcType=VARCHAR},
+      option_d = #{optionD,jdbcType=VARCHAR},
+      answer_true = #{answerTrue,jdbcType=VARCHAR},
+      question_analysis = #{questionAnalysis,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      catalog_id = #{catalogId,jdbcType=INTEGER},
+      question_level = #{questionLevel,jdbcType=VARCHAR}
+    where question_id = #{questionId,jdbcType=INTEGER}
+  </update>
+</mapper>

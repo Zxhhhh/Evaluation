@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.why.Evaluation.mapperImpl.CatalogueMapper" >
+  <resultMap id="BaseResultMap" type="com.why.Evaluation.dto.Catalogue" >
+    <id column="catalog_id" property="catalogId" jdbcType="INTEGER" />
+    <result column="catalog_name" property="catalogName" jdbcType="VARCHAR" />
+    <result column="catalog_info" property="catalogInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    catalog_id, catalog_name, catalog_info
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.why.Evaluation.dto.CatalogueExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from catalogue
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from catalogue
+    where catalog_id = #{catalogId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from catalogue
+    where catalog_id = #{catalogId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.why.Evaluation.dto.CatalogueExample" >
+    delete from catalogue
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.why.Evaluation.dto.Catalogue" >
+    insert into catalogue (catalog_id, catalog_name, catalog_info
+      )
+    values (#{catalogId,jdbcType=INTEGER}, #{catalogName,jdbcType=VARCHAR}, #{catalogInfo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.why.Evaluation.dto.Catalogue" >
+    insert into catalogue
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="catalogId != null" >
+        catalog_id,
+      </if>
+      <if test="catalogName != null" >
+        catalog_name,
+      </if>
+      <if test="catalogInfo != null" >
+        catalog_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="catalogId != null" >
+        #{catalogId,jdbcType=INTEGER},
+      </if>
+      <if test="catalogName != null" >
+        #{catalogName,jdbcType=VARCHAR},
+      </if>
+      <if test="catalogInfo != null" >
+        #{catalogInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.why.Evaluation.dto.CatalogueExample" resultType="java.lang.Integer" >
+    select count(*) from catalogue
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update catalogue
+    <set >
+      <if test="record.catalogId != null" >
+        catalog_id = #{record.catalogId,jdbcType=INTEGER},
+      </if>
+      <if test="record.catalogName != null" >
+        catalog_name = #{record.catalogName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.catalogInfo != null" >
+        catalog_info = #{record.catalogInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update catalogue
+    set catalog_id = #{record.catalogId,jdbcType=INTEGER},
+      catalog_name = #{record.catalogName,jdbcType=VARCHAR},
+      catalog_info = #{record.catalogInfo,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.why.Evaluation.dto.Catalogue" >
+    update catalogue
+    <set >
+      <if test="catalogName != null" >
+        catalog_name = #{catalogName,jdbcType=VARCHAR},
+      </if>
+      <if test="catalogInfo != null" >
+        catalog_info = #{catalogInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where catalog_id = #{catalogId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.why.Evaluation.dto.Catalogue" >
+    update catalogue
+    set catalog_name = #{catalogName,jdbcType=VARCHAR},
+      catalog_info = #{catalogInfo,jdbcType=VARCHAR}
+    where catalog_id = #{catalogId,jdbcType=INTEGER}
+  </update>
+</mapper>
